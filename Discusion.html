@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chat Marketplace</title>
+<style>
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:#f5f7fa;
+}
+.chat-container{
+    max-width:600px;
+    height:90vh;
+    margin:20px auto;
+    background:white;
+    border-radius:15px;
+    overflow:hidden;
+    box-shadow:0 5px 20px rgba(0,0,0,.1);
+}
+.header{
+    background:#111;
+    color:white;
+    padding:15px;
+    text-align:center;
+}
+.messages{
+    height:70vh;
+    overflow-y:auto;
+    padding:15px;
+}
+.message{
+    padding:10px;
+    margin:10px 0;
+    border-radius:10px;
+    max-width:70%;
+}
+.client{
+    background:#d4edda;
+    margin-left:auto;
+}
+.vendeur{
+    background:#e9ecef;
+}
+.input-zone{
+    display:flex;
+    padding:10px;
+    border-top:1px solid #ddd;
+}
+input{
+    flex:1;
+    padding:10px;
+    border:1px solid #ddd;
+    border-radius:8px;
+}
+button{
+    margin-left:10px;
+    padding:10px 15px;
+    border:none;
+    background:#111;
+    color:white;
+    border-radius:8px;
+    cursor:pointer;
+}
+</style>
+</head>
+<body>
+<div class="chat-container">
+<div class="header">
+💬 Chat Client - Vendeur
+</div>
+<div class="messages" id="messages">
+<div class="message vendeur">
+Bonjour, comment puis-je vous aider ?
+</div>
+</div>
+<div class="input-zone">
+<input
+type="text"
+id="messageInput"
+placeholder="Écrivez un message...">
+<button onclick="envoyerMessage()">
+Envoyer
+</button>
+</div>
+</div>
+<script>
+function envoyerMessage(){
+let texte =
+document.getElementById("messageInput").value;
+if(texte === ""){
+return;
+}
+let zone =
+document.getElementById("messages");
+zone.innerHTML += `
+<div class="message client">
+${texte}
+</div>
+`;
+document.getElementById("messageInput").value = "";
+zone.scrollTop = zone.scrollHeight;
+/* Réponse automatique du vendeur */
+setTimeout(()=>{
+zone.innerHTML += `
+<div class="message vendeur">
+Merci pour votre message.
+Nous vous répondrons bientôt.
+</div>
+`;
+zone.scrollTop = zone.scrollHeight;
+},1000);
+}
+</script>
+</body>
+</html>

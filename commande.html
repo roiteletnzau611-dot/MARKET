@@ -1,0 +1,121 @@
+
+
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Commande</title>
+<style>
+body{
+    font-family:Arial,sans-serif;
+    background:linear-gradient(135deg,#f5f7fa,#c3cfe2);
+    padding:20px;
+}
+.container{
+    max-width:600px;
+    margin:auto;
+    background:white;
+    padding:25px;
+    border-radius:15px;
+    box-shadow:0 5px 15px rgba(0,0,0,.1);
+}
+h1{
+    text-align:center;
+    margin-bottom:20px;
+}
+input, textarea, select{
+    width:100%;
+    padding:12px;
+    margin:10px 0;
+    border:1px solid #ccc;
+    border-radius:8px;
+}
+button{
+    width:100%;
+    padding:12px;
+    border:none;
+    background:#111;
+    color:white;
+    border-radius:8px;
+    cursor:pointer;
+}
+.total{
+    font-size:22px;
+    font-weight:bold;
+    color:#27ae60;
+    text-align:center;
+    margin:15px 0;
+}
+</style>
+</head>
+<body>
+<div class="container">
+<h1>📦 Finaliser la commande</h1>
+<input type="text" id="nom" placeholder="Nom complet">
+<input type="tel" id="telephone"
+placeholder="+243 XXX XXX XXX">
+<input type="text" id="ville"
+placeholder="Ville">
+<textarea id="adresse"
+placeholder="Adresse de livraison"></textarea>
+<select id="paiement">
+<option value="">Choisir un moyen de paiement</option>
+<option>Orange Money</option>
+<option>M-Pesa</option>
+<option>Airtel Money</option>
+<option>Carte Bancaire</option>
+</select>
+<p class="total" id="total"></p>
+<button onclick="passerCommande()">
+Confirmer la commande
+</button>
+</div>
+<script>
+let panier =
+JSON.parse(localStorage.getItem("panier"))
+|| [];
+let total = 0;
+panier.forEach(item=>{
+    total += item.prix;
+});
+document.getElementById("total")
+.innerText = "Total à payer : " + total + "$";
+function passerCommande(){
+let nom =
+document.getElementById("nom").value;
+let telephone =
+document.getElementById("telephone").value;
+let ville =
+document.getElementById("ville").value;
+let adresse =
+document.getElementById("adresse").value;
+let paiement =
+document.getElementById("paiement").value;
+if(!nom || !telephone || !ville ||
+   !adresse || !paiement){
+    alert("Veuillez remplir tous les champs");
+    return;
+}
+let commande = {
+    id: Date.now(),
+    nom,
+    telephone,
+    ville,
+    adresse,
+    paiement,
+    produits: panier,
+    total
+};
+localStorage.setItem(
+"commande_" + commande.id,
+JSON.stringify(commande)
+);
+localStorage.removeItem("panier");
+alert("Commande enregistrée avec succès !");
+console.log(commande);
+}
+</script>
+</body>
+</html>

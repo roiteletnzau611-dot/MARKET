@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fashion Market Africa</title>
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+body{
+    background:linear-gradient(135deg,#f5f7fa,#c3cfe2);
+}
+header{
+    background:#111;
+    color:white;
+    padding:15px 20px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+nav a{
+    color:white;
+    text-decoration:none;
+    margin-left:15px;
+}
+.hero{
+    text-align:center;
+    padding:40px;
+}
+.filters{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    background:white;
+    margin:20px;
+    padding:15px;
+    border-radius:15px;
+}
+input,select{
+    padding:10px;
+    border:1px solid #ccc;
+    border-radius:8px;
+}
+.products{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:20px;
+    padding:20px;
+}
+.card{
+    background:white;
+    border-radius:15px;
+    overflow:hidden;
+    box-shadow:0 5px 15px rgba(0,0,0,.1);
+}
+.card img{
+    width:100%;
+    height:220px;
+    object-fit:cover;
+}
+.card-body{
+    padding:15px;
+}
+.price{
+    color:#27ae60;
+    font-weight:bold;
+    margin:10px 0;
+}
+button{
+    width:100%;
+    padding:10px;
+    border:none;
+    background:#111;
+    color:white;
+    border-radius:8px;
+    cursor:pointer;
+}
+.panier{
+    background:white;
+    margin:20px;
+    padding:20px;
+    border-radius:15px;
+}
+.item{
+    display:flex;
+    justify-content:space-between;
+    margin-bottom:10px;
+}
+</style>
+</head>
+<body>
+<header>
+<h2>Fashion Market Africa</h2>
+<nav>
+<a href="#">Accueil</a>
+<a href="#">Vendeurs</a>
+<a href="#">Connexion</a>
+<a href="#">🛒 <span id="cartCount">0</span></a>
+</nav>
+</header>
+<section class="hero">
+<h1>Marketplace de Mode Africaine</h1>
+<p>Découvrez les dernières tendances.</p>
+</section>
+<div class="filters">
+<input
+type="text"
+id="search"
+placeholder="Rechercher..."
+onkeyup="filtrerProduits()">
+<select id="categorie" onchange="filtrerProduits()">
+<option value="">Toutes catégories</option>
+<option value="robe">Robes</option>
+<option value="chaussures">Chaussures</option>
+<option value="sac">Sacs</option>
+</select>
+</div>
+<div class="products" id="products"></div>
+<div class="panier">
+<h2>🛒 Mon Panier</h2>
+<div id="listePanier"></div>
+<h3 id="total">Total : 0$</h3>
+<button onclick="viderPanier()">
+Vider le panier
+</button>
+</div>
+<script>
+const produits = [
+{
+nom:"Robe Africaine Wax",
+categorie:"robe",
+prix:45,
+image:"téléchargement (5).jpg"
+},
+{
+nom:"Chaussures Élégantes",
+categorie:"chaussures",
+prix:80,
+image:"téléchargement (4).jpg"
+},
+{
+nom:"Sac Africain",
+categorie:"sac",
+prix:35,
+image:"téléchargement (3).jpg"
+}
+];
+let panier =
+JSON.parse(localStorage.getItem("panier"))
+|| [];
+function afficherProduits(liste){
+const container =
+document.getElementById("products");
+container.innerHTML = "";
+liste.forEach(produit=>{
+container.innerHTML += `
+<div class="card">
+<img src="${produit.image}">
+<div class="card-body">
+<h3>${produit.nom}</h3>
+<p class="price">${produit.prix}$</p>
+<button onclick="ajouterPanier('${produit.nom}',${produit.prix})">
+Ajouter au panier
+</button>
+</div>
+</div>
+`;
+});
+}
+function filtrerProduits(){
+let texte =
+document.getElementById("search")
+.value.toLowerCase();
+let categorie =
+document.getElementById("categorie")
+.value;
+let resultat = produits.filter(p=>{
+return p.nom.toLowerCase()
+.includes(texte)
+&&
+(categorie==="" ||
+p.categorie===categorie);
+});
+afficherProduits(resultat);
+}
+function ajouterPanier(nom,prix){
+panier.push({
+nom,
+prix
+});
+localStorage.setItem(
+"panier",
+JSON.stringify(panier)
+);
+afficherPanier();
+}
+function afficherPanier(){
+let liste =
+document.getElementById("listePanier");
+liste.innerHTML = "";
+let total = 0;
+panier.forEach((item,index)=>{
+total += item.prix;
+liste.innerHTML += `
+<div class="item">
+<span>${item.nom}</span>
+<span>${item.prix}$</span>
+</div>
+`;
+});
+document.getElementById("cartCount")
+.innerText = panier.length;
+document.getElementById("total")
+.innerText = "Total : " + total + "$";
+}
+function viderPanier(){
+panier = [];
+localStorage.removeItem("panier");
+afficherPanier();
+}
+afficherProduits(produits);
+afficherPanier();
+</script>
+</body>
+</html>

@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fashion Market Africa</title>
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+body{
+background:#f5f7fa;
+}
+header{
+background:#111;
+color:white;
+padding:15px 20px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+nav a{
+color:white;
+text-decoration:none;
+margin-left:15px;
+}
+.hero{
+text-align:center;
+padding:40px;
+background:linear-gradient(135deg,#f5f7fa,#c3cfe2);
+}
+.search{
+padding:20px;
+text-align:center;
+}
+.search input{
+width:300px;
+max-width:90%;
+padding:12px;
+border:1px solid #ddd;
+border-radius:8px;
+}
+.products{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:20px;
+padding:20px;
+}
+.card{
+background:white;
+border-radius:15px;
+overflow:hidden;
+box-shadow:0 5px 15px rgba(0,0,0,.1);
+}
+.card img{
+width:100%;
+height:220px;
+object-fit:cover;
+}
+.card-body{
+padding:15px;
+}
+.price{
+color:#27ae60;
+font-weight:bold;
+margin:10px 0;
+}
+.actions{
+display:flex;
+gap:10px;
+}
+.actions button{
+flex:1;
+padding:10px;
+border:none;
+border-radius:8px;
+cursor:pointer;
+}
+.favori{
+background:#e74c3c;
+color:white;
+}
+.panier{
+background:#111;
+color:white;
+}
+.section{
+background:white;
+margin:20px;
+padding:20px;
+border-radius:15px;
+}
+.item{
+display:flex;
+justify-content:space-between;
+padding:10px 0;
+border-bottom:1px solid #eee;
+}
+</style>
+</head>
+<body>
+<header>
+<h2>Fashion Market Africa</h2>
+<nav>
+<a href="#">❤️ <span id="favCount">0</span></a>
+<a href="#">🛒 <span id="cartCount">0</span></a>
+</nav>
+</header>
+<section class="hero">
+<h1>Mode Africaine Moderne</h1>
+<p>Robes, sacs, chaussures et accessoires</p>
+</section>
+<div class="search">
+<input
+type="text"
+id="search"
+placeholder="Rechercher un produit..."
+onkeyup="filtrer()">
+</div>
+<div class="products" id="products"></div>
+<div class="section">
+<h2>❤️ Mes Favoris</h2>
+<div id="listeFavoris"></div>
+</div>
+<div class="section">
+<h2>🛒 Mon Panier</h2>
+<div id="listePanier"></div>
+<h3 id="total">Total : 0$</h3>
+</div>
+<script>
+const produits = [
+{
+nom:"Robe Africaine Wax",
+prix:45,
+image:"images/robe.jpg"
+},
+{
+nom:"Sac Africain",
+prix:35,
+image:"images/bag.jpg"
+},
+{
+nom:"Chaussures Élégantes",
+prix:80,
+image:"images/shoes.jpg"
+}
+];
+let favoris =
+JSON.parse(localStorage.getItem("favoris"))
+|| [];
+let panier =
+JSON.parse(localStorage.getItem("panier"))
+|| [];
+function afficherProduits(liste){
+let container =
+document.getElementById("products");
+container.innerHTML = "";
+liste.forEach(p=>{
+container.innerHTML += `
+<div class="card">
+<img src="${p.image}">
+<div class="card-body">
+<h3>${p.nom}</h3>
+<p class="price">${p.prix}$</p>
+<div class="actions">
+<button
+class="favori"
+onclick="ajouterFavori('${p.nom}',${p.prix})">
+❤️
+</button>
+<button
+class="panier"
+onclick="ajouterPanier('${p.nom}',${p.prix})">
+🛒
+</button>
+</div>
+</div>
+</div>
+`;
+});
+}
+function filtrer(){
+let texte =
+document.getElementById("search")
+.value.toLowerCase();
+let resultat =
+produits.filter(p=>
+p.nom.toLowerCase()
+.includes(texte)
+);
+afficherProduits(resultat);
+}
+function ajouterFavori(nom,prix){
+favoris.push({nom,prix});
+localStorage.setItem(
+"favoris",
+JSON.stringify(favoris)
+);
+afficherFavoris();
+}
+function ajouterPanier(nom,prix){
+panier.push({nom,prix});
+localStorage.setItem(
+"panier",
+JSON.stringify(panier)
+);
+afficherPanier();
+}
+function afficherFavoris(){
+let zone =
+document.getElementById("listeFavoris");
+zone.innerHTML = "";
+favoris.forEach(item=>{
+zone.innerHTML += `
+<div class="item">
+<span>${item.nom}</span>
+<span>${item.prix}$</span>
+</div>
+`;
+});
+document.getElementById("favCount")
+.innerText = favoris.length;
+}
+function afficherPanier(){
+let zone =
+document.getElementById("listePanier");
+zone.innerHTML = "";
+let total = 0;
+panier.forEach(item=>{
+total += item.prix;
+zone.innerHTML += `
+<div class="item">
+<span>${item.nom}</span>
+<span>${item.prix}$</span>
+</div>
+`;
+});
+document.getElementById("cartCount")
+.innerText = panier.length;
+document.getElementById("total")
+.innerText =
+"Total : " + total + "$";
+}
+afficherProduits(produits);
+afficherFavoris();
+afficherPanier();
+</script>
+</body>
+</html>

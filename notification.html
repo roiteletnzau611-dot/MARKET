@@ -1,0 +1,168 @@
+Notification 
+
+
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Notifications Marketplace</title>
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+body{
+background:#f5f7fa;
+padding:20px;
+}
+.header{
+background:#111;
+color:white;
+padding:15px 20px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+border-radius:15px;
+}
+.notif-icon{
+font-size:22px;
+}
+.notif-count{
+background:red;
+color:white;
+padding:3px 8px;
+border-radius:50%;
+font-size:12px;
+}
+.container{
+margin-top:20px;
+background:white;
+padding:20px;
+border-radius:15px;
+box-shadow:0 5px 15px rgba(0,0,0,.1);
+}
+.notification{
+padding:15px;
+margin-top:10px;
+background:#f8f9fa;
+border-left:5px solid #27ae60;
+border-radius:10px;
+}
+.notification small{
+color:gray;
+}
+button{
+margin-top:15px;
+padding:12px;
+background:#111;
+color:white;
+border:none;
+border-radius:8px;
+cursor:pointer;
+}
+/* TOAST */
+.toast{
+position:fixed;
+top:20px;
+right:20px;
+background:#27ae60;
+color:white;
+padding:15px 20px;
+border-radius:10px;
+display:none;
+box-shadow:0 5px 15px rgba(0,0,0,.2);
+}
+</style>
+</head>
+<body>
+<div class="header">
+<h2>🔔 Notifications</h2>
+<div class="notif-icon">
+🔔 <span id="notifCount"
+class="notif-count">5</span>
+</div>
+</div>
+<div class="container">
+<h3>Centre de notifications</h3>
+<div id="notifications">
+<div class="notification">
+🛒 Nouvelle commande reçue
+<br>
+<small>Il y a 2 minutes</small>
+</div>
+<div class="notification">
+💳 Paiement confirmé
+<br>
+<small>Il y a 10 minutes</small>
+</div>
+<div class="notification">
+🚚 Commande expédiée
+<br>
+<small>Il y a 20 minutes</small>
+</div>
+<div class="notification">
+💬 Nouveau message client
+<br>
+<small>Il y a 30 minutes</small>
+</div>
+<div class="notification">
+⭐ Nouvel avis reçu
+<br>
+<small>Il y a 1 heure</small>
+</div>
+</div>
+<button onclick="ajouterNotification()">
+➕ Générer une notification
+</button>
+</div>
+<div id="toast" class="toast"></div>
+<script>
+let compteur = 5;
+function ajouterNotification(){
+const messages = [
+"🛒 Nouvelle commande reçue",
+"💳 Paiement validé",
+"🚚 Livraison en cours",
+"💬 Nouveau message",
+"⭐ Nouvel avis",
+"❤️ Produit ajouté aux favoris"
+];
+let message =
+messages[
+Math.floor(
+Math.random()*messages.length
+)
+];
+let zone =
+document.getElementById("notifications");
+zone.innerHTML =
+`
+<div class="notification">
+${message}
+<br>
+<small>À l'instant</small>
+</div>
+`
++
+zone.innerHTML;
+compteur++;
+document.getElementById("notifCount")
+.innerText = compteur;
+showToast(message);
+}
+function showToast(message){
+let toast =
+document.getElementById("toast");
+toast.innerText = message;
+toast.style.display = "block";
+setTimeout(()=>{
+toast.style.display = "none";
+},3000);
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Statistiques des ventes</title>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+body{
+    font-family:Arial,sans-serif;
+    background:#f5f7fa;
+    padding:20px;
+}
+
+.container{
+    max-width:1000px;
+    margin:auto;
+}
+
+.card{
+    background:white;
+    padding:20px;
+    margin-bottom:20px;
+    border-radius:15px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.1);
+}
+
+h2{
+    text-align:center;
+    margin-bottom:20px;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<div class="card">
+<h2>📈 Ventes Hebdomadaires</h2>
+<canvas id="weeklyChart"></canvas>
+</div>
+
+<div class="card">
+<h2>📊 Ventes Mensuelles</h2>
+<canvas id="monthlyChart"></canvas>
+</div>
+
+</div>
+
+<script>
+
+// Graphique hebdomadaire
+
+const weeklyCtx =
+document.getElementById('weeklyChart');
+
+new Chart(weeklyCtx, {
+
+type: 'line',
+
+data: {
+
+labels: [
+'Lundi',
+'Mardi',
+'Mercredi',
+'Jeudi',
+'Vendredi',
+'Samedi',
+'Dimanche'
+],
+
+datasets: [{
+
+label: 'Ventes ($)',
+
+data: [
+120,
+180,
+150,
+220,
+300,
+420,
+350
+],
+
+borderWidth: 3,
+fill: false
+
+}]
+},
+
+options: {
+responsive: true
+}
+
+});
+
+// Graphique mensuel
+
+const monthlyCtx =
+document.getElementById('monthlyChart');
+
+new Chart(monthlyCtx, {
+
+type: 'bar',
+
+data: {
+
+labels: [
+'Jan',
+'Fév',
+'Mar',
+'Avr',
+'Mai',
+'Juin'
+],
+
+datasets: [{
+
+label: 'Ventes ($)',
+
+data: [
+2500,
+3200,
+4100,
+3800,
+5200,
+6100
+],
+
+borderWidth: 1
+
+}]
+},
+
+options: {
+responsive: true
+}
+
+});
+
+</script>
+
+</body>
+</html>

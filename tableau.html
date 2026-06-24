@@ -1,0 +1,144 @@
+Tableau 
+
+
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard Vendeur</title>
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+body{
+display:flex;
+background:#f5f7fa;
+}
+.sidebar{
+width:250px;
+height:100vh;
+background:#111;
+color:white;
+padding:20px;
+position:fixed;
+}
+.sidebar h2{
+margin-bottom:30px;
+}
+.sidebar a{
+display:block;
+color:white;
+text-decoration:none;
+padding:12px;
+margin:8px 0;
+border-radius:8px;
+}
+.sidebar a:hover{
+background:#333;
+}
+.main{
+margin-left:250px;
+padding:20px;
+width:100%;
+}
+.cards{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:20px;
+}
+.card{
+background:white;
+padding:20px;
+border-radius:15px;
+box-shadow:0 5px 15px rgba(0,0,0,.1);
+}
+.card h3{
+font-size:30px;
+margin-top:10px;
+}
+.table{
+background:white;
+margin-top:20px;
+padding:20px;
+border-radius:15px;
+box-shadow:0 5px 15px rgba(0,0,0,.1);
+}
+table{
+width:100%;
+border-collapse:collapse;
+}
+th,td{
+padding:12px;
+text-align:left;
+border-bottom:1px solid #ddd;
+}
+</style>
+</head>
+<body>
+<div class="sidebar">
+<h2>🏪 Fashion Market</h2>
+<a href="#">📦 Produits</a>
+<a href="#">🛒 Commandes</a>
+<a href="#">💰 Revenus</a>
+<a href="#">💬 Messages</a>
+<a href="#">⭐ Avis</a>
+<a href="#">👤 Profil</a>
+</div>
+<div class="main">
+<h1>Tableau de bord vendeur</h1>
+<br>
+<div class="cards">
+<div class="card">
+<p>Produits</p>
+<h3>125</h3>
+</div>
+<div class="card">
+<p>Commandes</p>
+<h3>48</h3>
+</div>
+<div class="card">
+<p>Revenus</p>
+<h3>2 450 $</h3>
+</div>
+<div class="card">
+<p>Avis</p>
+<h3>4.8 ⭐</h3>
+</div>
+</div>
+<div class="table">
+<h2>Dernières commandes</h2>
+<table>
+<tr>
+<th>Client</th>
+<th>Produit</th>
+<th>Montant</th>
+<th>Statut</th>
+</tr>
+<tr>
+<td>Patrick</td>
+<td>Robe Wax</td>
+<td>45$</td>
+<td>Livrée</td>
+</tr>
+<tr>
+<td>Sarah</td>
+<td>Sac Africain</td>
+<td>35$</td>
+<td>Expédiée</td>
+</tr>
+<tr>
+<td>Jean</td>
+<td>Chaussures</td>
+<td>80$</td>
+<td>En préparation</td>
+</tr>
+</table>
+</div>
+</div>
+</body>
+</html>

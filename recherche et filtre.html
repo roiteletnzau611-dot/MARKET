@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fashion Market Africa</title>
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+body{
+    background:linear-gradient(135deg,#f5f7fa,#c3cfe2);
+}
+header{
+    background:#111;
+    color:white;
+    padding:15px 25px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+nav a{
+    color:white;
+    text-decoration:none;
+    margin-left:15px;
+}
+.hero{
+    text-align:center;
+    padding:40px 20px;
+}
+.filters{
+    background:white;
+    margin:20px;
+    padding:20px;
+    border-radius:15px;
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    box-shadow:0 5px 15px rgba(0,0,0,0.1);
+}
+.filters input,
+.filters select{
+    padding:10px;
+    border:1px solid #ddd;
+    border-radius:8px;
+}
+.products{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:20px;
+    padding:20px;
+}
+.card{
+    background:white;
+    border-radius:15px;
+    overflow:hidden;
+    box-shadow:0 5px 15px rgba(0,0,0,0.1);
+    transition:0.3s;
+}
+.card:hover{
+    transform:translateY(-5px);
+}
+.card img{
+    width:100%;
+    height:220px;
+    object-fit:cover;
+}
+.card-body{
+    padding:15px;
+}
+.price{
+    color:#27ae60;
+    font-weight:bold;
+    margin:10px 0;
+}
+button{
+    width:100%;
+    padding:10px;
+    background:#111;
+    color:white;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+}
+</style>
+</head>
+<body>
+<header>
+<h2>Fashion Market Africa</h2>
+<nav>
+<a href="#">Accueil</a>
+<a href="#">Vendeurs</a>
+<a href="#">Connexion</a>
+</nav>
+</header>
+<section class="hero">
+<h1>Mode Africaine Moderne</h1>
+<p>Trouvez les meilleures tenues, sacs et chaussures.</p>
+</section>
+<div class="filters">
+<input
+type="text"
+id="search"
+placeholder="Rechercher..."
+onkeyup="filtrerProduits()">
+<select id="categorie" onchange="filtrerProduits()">
+<option value="">Toutes catégories</option>
+<option value="robe">Robes</option>
+<option value="chaussures">Chaussures</option>
+<option value="sac">Sacs</option>
+</select>
+<select id="prix" onchange="filtrerProduits()">
+<option value="">Tous les prix</option>
+<option value="50">Moins de 50$</option>
+<option value="100">Moins de 100$</option>
+</select>
+</div>
+<div class="products" id="products"></div>
+<script>
+const produits = [
+{
+nom:"Robe Africaine Wax",
+categorie:"robe",
+image:"téléchargement.jpg"
+},
+{
+nom:"Chaussures Élégantes",
+categorie:"chaussures",
+
+image:"téléchargement (1).jpg"
+},
+{
+nom:"Sac Africain",
+categorie:"sac",
+image:"téléchargement (2).jpg"
+}
+];
+function afficherProduits(liste){
+let container = document.getElementById("products");
+container.innerHTML = "";
+liste.forEach(produit=>{
+container.innerHTML += `
+<div class="card">
+<img src="${produit.image}" alt="${produit.nom}">
+<div class="card-body">
+<h3>${produit.nom}</h3>
+<p class="price">${produit.prix}$</p>
+<button>Ajouter au panier</button>
+</div>
+</div>
+`;
+});
+}
+function filtrerProduits(){
+let recherche =
+document.getElementById("search")
+.value.toLowerCase();
+let categorie =
+document.getElementById("categorie")
+.value;
+let prix =
+document.getElementById("prix")
+.value;
+let resultat = produits.filter(p=>{
+let okNom =
+p.nom.toLowerCase().includes(recherche);
+let okCategorie =
+categorie === "" ||
+p.categorie === categorie;
+let okPrix =
+prix === "" ||
+p.prix <= prix;
+return okNom &&
+okCategorie &&
+okPrix;
+});
+afficherProduits(resultat);
+}
+afficherProduits(produits);
+</script>
+</body>
+</html>

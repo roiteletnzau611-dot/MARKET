@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Catalogue Vendeurs</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial;
+    background:linear-gradient(135deg,#f5f7fa,#c3cfe2);
+}
+
+header{
+    background:#111;
+    color:white;
+    padding:15px;
+    text-align:center;
+}
+
+.container{
+    padding:20px;
+}
+
+.vendors{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:20px;
+}
+
+.card{
+    background:white;
+    border-radius:15px;
+    overflow:hidden;
+    box-shadow:0 5px 15px rgba(0,0,0,0.1);
+    transition:0.3s;
+}
+
+.card:hover{
+    transform:scale(1.03);
+}
+
+.card img{
+    width:100%;
+    height:180px;
+    object-fit:cover;
+}
+
+.card-body{
+    padding:15px;
+}
+
+button{
+    width:100%;
+    padding:10px;
+    background:#111;
+    color:white;
+    border:none;
+    cursor:pointer;
+    border-radius:8px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<h2>Catalogue des Vendeurs</h2>
+</header>
+
+<div class="container">
+<div class="vendors" id="vendors"></div>
+</div>
+
+<script>
+
+const vendeurs = [
+{
+nom:"Fashion Kin",
+desc:"Vêtements modernes et élégants",
+img:"hdis.jpg"
+},
+{
+nom:"Style Africa",
+desc:"Mode africaine tendance",
+img:"WhatsApp Image 2026-06-24 at 02.38.48.jpeg"
+},
+{
+nom:"Urban Wear",
+desc:"Streetwear & sneakers",
+img:"yu.jpg"
+},
+{
+nom:"Luxury Style",
+desc:"Mode luxe et premium",
+img:"yop.jpg"
+}
+];
+
+let container = document.getElementById("vendors");
+
+vendeurs.forEach(v=>{
+container.innerHTML += `
+<div class="card">
+<img src="${v.img}">
+<div class="card-body">
+<h3>${v.nom}</h3>
+<p>${v.desc}</p>
+<button>Voir boutique</button>
+</div>
+</div>
+`;
+});
+</script>
+
+</body>
+</html>
